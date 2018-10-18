@@ -1,6 +1,6 @@
-# kube-teamslack
+# kube-slackteams
 
-kube-teamslack is a monitoring service for Kubernetes. When a pod has failed,
+kube-slackteams is a monitoring service for Kubernetes. When a pod has failed,
 it will publish a message in Slack channel or Microsoft Teams webhook.
 
 ## Installation
@@ -19,7 +19,7 @@ it will publish a message in Slack channel or Microsoft Teams webhook.
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: kube-slack
+  name: kube-slackteams
 rules:
 - apiGroups: [""]
   resources: ["pods"]
@@ -28,20 +28,20 @@ rules:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: kube-slack
+  name: kube-slackteams
   namespace: kube-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: kube-slack
+  name: kube-slackteams
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: kube-slack
+  name: kube-slackteams
 subjects:
   - kind: ServiceAccount
-    name: kube-slack
+    name: kube-slackteams
     namespace: kube-system
   ```
 Load this Deployment into your Kubernetes. Make sure you set `SLACK_URL` or `TEAMS_URL` to the Webhook URL and uncomment serviceAccountName if you use RBAC
@@ -50,7 +50,7 @@ Load this Deployment into your Kubernetes. Make sure you set `SLACK_URL` or `TEA
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: kube-slack
+  name: kube-slackteams
   namespace: kube-system
 spec:
   replicas: 1
@@ -59,18 +59,20 @@ spec:
     metadata:
       annotations:
         scheduler.alpha.kubernetes.io/critical-pod: ""
-      name: kube-slack
+      name: kube-slackteams
       labels:
-        app: kube-slack
+        app: kube-slackteams
     spec:
      # Uncomment serviceAccountName if you use RBAC.
-     # serviceAccountName: kube-slack
+     # serviceAccountName: kube-slackteams
       containers:
-      - name: kube-slack
-        image: willwill/kube-slack:v3.4.0
+      - name: kube-slackteams
+        image: willwill/kube-slackteams:v3.4.0
         env:
         - name: SLACK_URL
           value: https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
+        # - name: TEAMS_URL
+        #   value: https://outlook.office.com/webhook/XXXXXXXXXXXXXXXXXXXXXXXX
         resources:
           requests:
             memory: 30M
@@ -88,11 +90,11 @@ spec:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: kube-slack-test
+  name: kube-slackteams-test
 spec:
   containers:
   - image: willwill/inexisting
-    name: kube-slack-test
+    name: kube-slackteams-test
 ```
 
 Additionally, the following environment variables can be used:
@@ -111,8 +113,8 @@ Additionally, the following environment variables can be used:
 
 Pods can be marked with the following annotations:
 
-- `kube-slack/ignore-pod`: Ignore all errors from this pod
-- `kube-slack/slack-channel`: Name of slack channel to notify (eg. `#monitoring`)
+- `kube-slackteams/ignore-pod`: Ignore all errors from this pod
+- `kube-slackteams/slack-channel`: Name of slack channel to notify (eg. `#monitoring`)
 
 ## License
 
