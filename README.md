@@ -1,6 +1,6 @@
-# kube-teamslack
+# kube-slackteams
 
-kube-teamslack is a monitoring service for Kubernetes. When a pod has failed,
+kube-slackteams is a monitoring service for Kubernetes. When a pod has failed,
 it will publish a message in Slack channel or Microsoft Teams webhook.
 
 ## Installation
