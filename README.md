@@ -1,13 +1,9 @@
-# kube-slack
+# kube-teamslack
 
-kube-slack is a monitoring service for Kubernetes. When a pod has failed,
-it will publish a message in Slack channel.
-
-![Screenshot](http://i.imgur.com/em62l25.png)
+kube-teamslack is a monitoring service for Kubernetes. When a pod has failed,
+it will publish a message in Slack channel or Microsoft Teams webhook.
 
 ## Installation
-
-[A Helm chart is available](https://github.com/kubernetes/charts/tree/master/stable/kube-slack)
 
 1. Create an incoming webhook:
    1. In the Slack interface, click on the gears button (Channel Settings) near the search box.
@@ -48,7 +44,7 @@ subjects:
     name: kube-slack
     namespace: kube-system
   ```
-Load this Deployment into your Kubernetes. Make sure you set `SLACK_URL` to the Webhook URL and uncomment serviceAccountName if you use RBAC
+Load this Deployment into your Kubernetes. Make sure you set `SLACK_URL` or `TEAMS_URL` to the Webhook URL and uncomment serviceAccountName if you use RBAC
 
 ```yml
 apiVersion: extensions/v1beta1
@@ -107,8 +103,9 @@ Additionally, the following environment variables can be used:
 - `KUBE_USE_KUBECONFIG`: Read Kubernetes credentials from active context in ~/.kube/config (default off)
 - `KUBE_USE_CLUSTER`: Read Kubernetes credentials from pod (default on)
 - `KUBE_NAMESPACES_ONLY`: Monitor a list of specific namespaces, specified either as json array or as a string of comma seperated values (`foo_namespace,bar_namespace`).
-- `SLACK_CHANNEL`: Override channel to send
-- `SLACK_PROXY`: URL of HTTP proxy used to connect to Slack
+- `SLACK_CHANNEL`: Override channel to send (Optional)
+- `SLACK_PROXY`: URL of HTTP proxy used to connect to Slack (Optional)
+- `TEAMS_URL`: Microsoft teams webhook url (Optional)
 
 ## Annotations
 

@@ -1,1 +1,1 @@
-module.exports = [require('./slack')];
+module.exports = [require('./teams'), require('./slack')];
