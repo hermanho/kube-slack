@@ -85,9 +85,7 @@ class PodLongNotReady extends EventEmitter {
 					pod.metadata.name
 				} is not ready: ${readyStatus.reason} - ${readyStatus.message}`,
 				color: 'danger',
-				title: `${pod.metadata.namespace}/${
-					pod.metadata.name
-				}: ${readyStatus.reason || 'Pod not ready'}`,
+				title: `Pod status of \"${pod.metadata.namespace}/${pod.metadata.name}\": ${readyStatus.reason || 'Pod not ready'}`,
 				text: readyStatus.message || 'Pod not ready',
 				...this.messageProps,
 			});
@@ -103,9 +101,7 @@ class PodLongNotReady extends EventEmitter {
 					item.metadata.name
 				} is ready: ${readyStatus.reason} - ${readyStatus.message}`,
 				color: 'good',
-				title: `${item.metadata.namespace}/${
-					item.metadata.name
-				}: ${readyStatus.reason || 'Pod is ready'}`,
+				title: `Pod status of \"${pod.metadata.namespace}/${pod.metadata.name}\": ${readyStatus.reason || 'Pod is ready'}`,
 				text: readyStatus.message || 'Pod is ready',
 				...this.messageProps,
 				_key: this.messageProps._key + 'recovery',

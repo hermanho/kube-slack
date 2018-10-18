@@ -61,9 +61,7 @@ class PodStatus extends EventEmitter {
 					item.state.waiting.message
 				})`,
 				color: 'danger',
-				title: `${item.pod.metadata.namespace}/${item.pod.metadata.name}/${
-					item.name
-				}`,
+				title: `Pod status of \"${item.pod.metadata.namespace}/${item.pod.metadata.name}\"`,
 				text: `Container entered status *${item.state.waiting.reason}*\n\`\`\`${
 					item.state.waiting.message
 				}\`\`\``,
@@ -86,9 +84,7 @@ class PodStatus extends EventEmitter {
 					item.pod.metadata.name
 				}/${item.name} ready`,
 				color: 'good',
-				title: `${item.pod.metadata.namespace}/${item.pod.metadata.name}/${
-					item.name
-				}`,
+				title: `Pod status of \"${item.pod.metadata.namespace}/${item.pod.metadata.name}\"`,
 				text: `Container entered status *${item.pod.status.phase}*\n${
 					item.restartCount
 				} restart${item.restartCount == 1 ? '' : 's'}`,
