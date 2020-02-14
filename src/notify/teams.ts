@@ -8,7 +8,7 @@ export default class TeamsNotifier {
 
   constructor() {
     try {
-      this.teamsUrl = config.get('teamsUrl');
+      this.teamsUrl = config.get('teams_url');
       logger.info('teamsUrl: ' + this.teamsUrl);
     } catch (err) {
       logger.error('Could not initialize Teams', err);
