@@ -65,7 +65,7 @@ export default class TeamsNotifier {
     });
 
     req.on('error', (e) => {
-      logger.error('Could not send notification to Teams', e);
+      logger.error('Could not send notification to Teams\n', e);
     });
     req.write(body)
     req.end();

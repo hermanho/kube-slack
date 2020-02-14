@@ -32,7 +32,9 @@ class KubeMonitoring {
 			delete item._key;
 
 			for (let notifier of this.notifiers) {
-				notifier.notify(item);
+				notifier.notify(item).catch(e => {
+					logger.error("error: ", e);
+				});
 			}
 		};
 
