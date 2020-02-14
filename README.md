@@ -1,5 +1,9 @@
 # kube-slackteams
 
+[![](https://img.shields.io/docker/cloud/build/hermanho/kube-slackteams.svg?style=flat-square)](https://hub.docker.com/r/hermanho/kube-slackteams/builds)
+![MicroBadger Layers](https://img.shields.io/microbadger/layers/hermanho/kube-slackteams.svg?style=flat-square)
+![MicroBadger Size](https://img.shields.io/microbadger/image-size/hermanho/kube-slackteams.svg?style=flat-square)
+
 kube-slackteams is a monitoring service for Kubernetes. When a pod has failed,
 it will publish a message in Slack channel or Microsoft Teams webhook.
 
