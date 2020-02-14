@@ -3,7 +3,7 @@ import * as config from 'config';
 import kube from '../kube';
 import { NotifyMessage, ContainerStatusWithPod } from '../types';
 
-class PodStatus extends EventEmitter {
+class PodStatus extends EventEmitter.EventEmitter {
 	blacklistReason: string[];
 	alerted: { [key: string]: ContainerStatusWithPod };
 
@@ -60,14 +60,14 @@ class PodStatus extends EventEmitter {
 			this.emit('message', {
 				fallback: `Container ${item.pod.metadata.namespace}/${
 					item.pod.metadata.name
-				}/${item.name} entered status ${item.state.waiting.reason} (${
+					}/${item.name} entered status ${item.state.waiting.reason} (${
 					item.state.waiting.message
-				})`,
+					})`,
 				color: 'danger',
 				title: `Pod status of \"${item.pod.metadata.namespace}/${item.pod.metadata.name}\"`,
 				text: `Container entered status *${item.state.waiting.reason}*\n\`\`\`${
 					item.state.waiting.message
-				}\`\`\``,
+					}\`\`\``,
 				mrkdwn_in: ['text'],
 				...messageProps,
 			});
@@ -83,19 +83,19 @@ class PodStatus extends EventEmitter {
 		if (
 			this.alerted[key] &&
 			item.ready &&
-			this.alerted[key].restartCount === item.restartCount && 
+			this.alerted[key].restartCount === item.restartCount &&
 			config.get('recovery_alert')
 		) {
 			delete this.alerted[key];
 			this.emit('message', {
 				fallback: `Container ${item.pod.metadata.namespace}/${
 					item.pod.metadata.name
-				}/${item.name} ready`,
+					}/${item.name} ready`,
 				color: 'good',
 				title: `Pod status of \"${item.pod.metadata.namespace}/${item.pod.metadata.name}\"`,
 				text: `Container entered status *${item.pod.status.phase}*\n${
 					item.restartCount
-				} restart${item.restartCount === 1 ? '' : 's'}`,
+					} restart${item.restartCount === 1 ? '' : 's'}`,
 				mrkdwn_in: ['text'],
 				...messageProps,
 				_key: key + 'recovery',

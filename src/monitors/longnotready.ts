@@ -8,7 +8,7 @@ import {
 	NotifyMessage,
 } from '../types';
 
-class PodLongNotReady extends EventEmitter {
+class PodLongNotReady extends EventEmitter.EventEmitter {
 	minimumTime: number;
 	alerted: { [key: string]: KubernetesPod };
 
@@ -97,7 +97,7 @@ class PodLongNotReady extends EventEmitter {
 			this.emit('message', {
 				fallback: `Pod ${pod.metadata.namespace}/${
 					pod.metadata.name
-				} is not ready: ${readyStatus.reason} - ${readyStatus.message}`,
+					} is not ready: ${readyStatus.reason} - ${readyStatus.message}`,
 				color: 'danger',
 				title: `Pod status of \"${pod.metadata.namespace}/${pod.metadata.name}\": ${readyStatus.reason || 'Pod not ready'}`,
 				text: readyStatus.message || 'Pod not ready',
@@ -120,9 +120,9 @@ class PodLongNotReady extends EventEmitter {
 			this.emit('message', {
 				fallback: `Pod ${item.metadata.namespace}/${
 					item.metadata.name
-				} is ready: ${readyStatus.reason} - ${readyStatus.message}`,
+					} is ready: ${readyStatus.reason} - ${readyStatus.message}`,
 				color: 'good',
-				title: `Pod status of \"${pod.metadata.namespace}/${pod.metadata.name}\": ${readyStatus.reason || 'Pod is ready'}`,
+				title: `Pod status of \"${item.metadata.namespace}/${item.metadata.name}\": ${readyStatus.reason || 'Pod is ready'}`,
 				text: readyStatus.message || 'Pod is ready',
 				...messageProps,
 				_key: messageProps._key + 'recovery',

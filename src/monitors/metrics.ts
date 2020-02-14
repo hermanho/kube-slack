@@ -8,7 +8,7 @@ const UNIT_MAP: { [type: string]: string } = {
 	cpu: ' vCPU',
 };
 
-class PodMetrics extends EventEmitter {
+class PodMetrics extends EventEmitter.EventEmitter {
 	alerted: { [key: string]: KubernetesPod };
 	constructor() {
 		super();
@@ -104,7 +104,7 @@ class PodMetrics extends EventEmitter {
 			this.emit('message', {
 				fallback: `Container ${pod.metadata.namespace}/${
 					pod.metadata.name
-				} has high ${type} utilization`,
+					} has high ${type} utilization`,
 				color: 'danger',
 				title: `${pod.metadata.namespace}/${pod.metadata.name}`,
 				text: `Container ${type} usage above ${threshold *
@@ -124,7 +124,7 @@ class PodMetrics extends EventEmitter {
 			this.emit('message', {
 				fallback: `Container ${pod.metadata.namespace}/${
 					pod.metadata.name
-				} has normal ${type} utilization`,
+					} has normal ${type} utilization`,
 				color: 'good',
 				title: `${pod.metadata.namespace}/${pod.metadata.name}`,
 				text: `Container ${type} at safe value *${parsedUsage} / ${parsedLimit}${unit}*`,

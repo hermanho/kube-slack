@@ -20,7 +20,7 @@ export class Kubernetes {
 	protected namespacesOnly: string[] | null = null;
 
 	constructor() {
-		this.kube = new Api.Client1_10({ config: this.getConfig() });
+		this.kube = new Api.Client1_13({ config: this.getConfig() });
 		this.genericClient = new (Api as any).Client({ config: this.getConfig() });
 		this.ready = Promise.all([
 			(this.kube as any).loadSpec(),
@@ -28,7 +28,7 @@ export class Kubernetes {
 		]);
 		this.metricsEnabled = true;
 
-		let namespacesOnly: string|string[] = config.get('namespaces_only');
+		let namespacesOnly: string | string[] = config.get('namespaces_only');
 		if (namespacesOnly) {
 			if (!Array.isArray(namespacesOnly)) {
 				namespacesOnly = namespacesOnly
