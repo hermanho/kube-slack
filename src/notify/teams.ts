@@ -1,9 +1,9 @@
-const config = require('config');
-const logger = require('../logger');
-const https = require('https');
+import * as config from 'config';
+import logger from '../logger';
+import * as https from 'https';
 const teams_url = "";
 
-class TeamsNotifier {
+export default class TeamsNotifier {
   constructor() {
     let opts = {};
     try {
@@ -70,5 +70,3 @@ class TeamsNotifier {
     req.end();
   }
 }
-
-module.exports = TeamsNotifier;
