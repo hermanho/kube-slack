@@ -19,7 +19,7 @@ jobs:
         - if [ -n "$TRAVIS_TAG" ] || ( [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]); then echo "Push functionality activated"; else echo "Push functionality disabled"; fi
     - stage: build
       script:
-        - npm run build
+        # - npm run build
         - DOCKER_BUILDKIT=1 docker build --build-arg VERSION="$(git describe)" -t hermanho/kube-slackteams .
       after_success:
         # Push successful builds of the master branch to Docker Hub
