@@ -3,4 +3,6 @@ package-lock.json
 yarn.lock
 config/local*.yaml
 .vscode
-build/
+build
+.cache
+dist

@@ -13,10 +13,11 @@ ENV user kube-slack
 RUN addgroup -S $user && adduser -S -g $user $user
 
 WORKDIR /app
-COPY package.json /app
-RUN npm install --production
+# COPY package.json /app
+# RUN npm install --production
 
-COPY --from=build /app/build/ /app
+# COPY --from=build /app/build/ /app
+COPY --from=build /app/dist/ /app
 COPY config/ /app/config/
 
 RUN chown -R $user:$user /app
