@@ -1,11 +1,13 @@
 # kube-slackteams
 
-[![](https://img.shields.io/docker/cloud/build/hermanho/kube-slackteams.svg?style=flat-square)](https://hub.docker.com/r/hermanho/kube-slackteams/builds)
-![MicroBadger Layers](https://img.shields.io/microbadger/layers/hermanho/kube-slackteams.svg?style=flat-square)
-![MicroBadger Size](https://img.shields.io/microbadger/image-size/hermanho/kube-slackteams.svg?style=flat-square)
+[![Docker Hub](https://img.shields.io/docker/v/hermanho/kube-slackteams?style=flat-square)](https://hub.docker.com/r/hermanho/kube-slackteams)
+[![Docker Hub](https://img.shields.io/docker/image-size/hermanho/kube-slackteams?style=flat-square)](https://hub.docker.com/r/hermanho/kube-slackteams)
+[![](https://img.shields.io/docker/pulls/hermanho/kube-slackteams?style=flat-square)](https://hub.docker.com/r/hermanho/kube-slackteams)
+[![Travis (.com)](https://img.shields.io/travis/com/hermanho/kube-slack?style=flat-square)](https://travis-ci.com/github/hermanho/kube-slack/)
 
 kube-slackteams is a monitoring service for Kubernetes. When a pod has failed,
 it will publish a message in Slack channel or Microsoft Teams webhook.
+
 
 ## Installation
 
