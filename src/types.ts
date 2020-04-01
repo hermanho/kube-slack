@@ -140,7 +140,7 @@ export interface KubernetesPodMetrics extends KubernetesObject {
 	}>;
 }
 
-export interface Monitor extends EventEmitter {} // tslint:disable-line
+export interface Monitor extends EventEmitter { } // tslint:disable-line
 
 export type MonitorFactory = () => Monitor;
 
@@ -177,7 +177,9 @@ export interface NotifyMessage {
 	}>;
 }
 
-export interface Notifier {
-	new(): Notifier
+export interface NotifierMethod {
 	notify(message: NotifyMessage): Promise<any>;
+}
+export interface Notifier extends NotifierMethod {
+	new(): Notifier;
 }

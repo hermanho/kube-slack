@@ -1,9 +1,9 @@
 import * as config from 'config';
 import * as Slack from 'node-slack';
 import logger from '../logger';
-import { NotifyMessage } from '../types';
+import { NotifyMessage, NotifierMethod } from '../types';
 
-export default class SlackNotifier {
+export default class SlackNotifier implements NotifierMethod {
 	slack: Slack | null;
 
 	constructor() {
@@ -19,11 +19,12 @@ export default class SlackNotifier {
 			logger.error('Could not initialize Slack', err);
 			this.slack = null;
 		}
+		return this;
 	}
 
 	notify(item: NotifyMessage) {
 		if (!this.slack) {
-			return;
+			return Promise.resolve();
 		}
 
 		let channel = item.channel || config.get('slack_channel');
