@@ -8,18 +8,16 @@ RUN npm run build
 
 # Run
 FROM node:13-alpine
-# Don't run as root user
-ENV user kube-slack
-RUN addgroup -S $user && adduser -S -g $user $user
 
 WORKDIR /app
 COPY package.json /app
+ENV NODE_ENV $NODE_ENV
 RUN npm install --production
 
 COPY --from=build /app/build/ /app
 COPY config/ /app/config/
 
-RUN chown -R $user:$user /app
-USER $user
+RUN chown -R node:node /app
+USER node
 
 CMD ["node", "."]
