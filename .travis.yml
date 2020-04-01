@@ -20,7 +20,7 @@ jobs:
     - stage: build
       script:
         # - npm run build
-        - DOCKER_BUILDKIT=1 docker build --build-arg VERSION="$(git describe)" -t hermanho/kube-slackteams .
+        - docker build --build-arg VERSION="$(git describe)" -t hermanho/kube-slackteams .
       after_success:
         # Push successful builds of the master branch to Docker Hub
         # $DOCKER_USERNAME    - Docker Hub username used to push the image
