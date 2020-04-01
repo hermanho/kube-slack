@@ -1,5 +1,4 @@
 import * as config from 'config';
-import * as https from 'https';
 import * as bent from 'bent';
 import logger from '../logger';
 import { NotifyMessage, NotifierMethod } from '../types';
