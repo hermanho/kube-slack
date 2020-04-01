@@ -15,7 +15,7 @@ script:
   - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then echo "No pull request build detected"; else echo "Pull request build detected"; fi
   - if [ -n "$TRAVIS_TAG" ] || ( [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]); then echo "Push functionality activated"; else echo "Push functionality disabled"; fi
   # - npm run build
-  - docker build --build-arg VERSION="$(git describe)" -t hermanho/kube-slackteams .
+  - docker build --build-arg GIT_DESCRIBE="$(git describe)" --build-arg GIT_HASH="$(git rev-parse --short HEAD)" -t hermanho/kube-slackteams .
 after_success:
   # Push successful builds of the master branch to Docker Hub
   # $DOCKER_USERNAME    - Docker Hub username used to push the image
