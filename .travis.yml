@@ -1,36 +1,31 @@
 language: node_js
 
 node_js:
-  - "13"
+  - '13'
 
 services:
   - docker
 
-jobs:
-  include:
-    - stage: prepare::info
-      script:
-        - echo "         TRAVIS_TAG= $TRAVIS_TAG"
-        - echo "      TRAVIS_BRANCH= $TRAVIS_BRANCH"
-        - echo "TRAVIS_PULL_REQUEST= $TRAVIS_PULL_REQUEST"
-        - if [ -n "$TRAVIS_TAG" ]; then echo "Tagged build detected"; else echo "No tagged build detected"; fi
-        - if [ "$TRAVIS_BRANCH" = "master" ]; then echo "Master branch build detected"; else echo "No master branch build detected"; fi
-        - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then echo "No pull request build detected"; else echo "Pull request build detected"; fi
-        - if [ -n "$TRAVIS_TAG" ] || ( [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]); then echo "Push functionality activated"; else echo "Push functionality disabled"; fi
-    - stage: build
-      script:
-        # - npm run build
-        - docker build --build-arg VERSION="$(git describe)" -t hermanho/kube-slackteams .
-      after_success:
-        # Push successful builds of the master branch to Docker Hub
-        # $DOCKER_USERNAME    - Docker Hub username used to push the image
-        # $DOCKER_PASSWORD    - Password of the Docker Hub user used to push the image
-        # See https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings
-        - if [ ! -z "$TRAVIS_TAG" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-          docker tag hermanho/kube-slackteams:latest hermanho/kube-slackteams:"$TRAVIS_TAG";
-          fi
-        - if [ "$TRAVIS_PULL_REQUEST" = "false" ] && ([ "$TRAVIS_BRANCH" == "master" ] || [ ! -z "$TRAVIS_TAG" ]) && [ "$DOCKER_USERNAME" != "" ] && [ "$DOCKER_PASSWORD" != "" ]; then
-          docker images hermanho/kube-slackteams;
-          echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin;
-          docker images --format "{{.Repository}}:{{.Tag}}" "hermanho/kube-slackteams" | xargs -L 1 docker push ;
-          fi
+script:
+  - echo "         TRAVIS_TAG= $TRAVIS_TAG"
+  - echo "      TRAVIS_BRANCH= $TRAVIS_BRANCH"
+  - echo "TRAVIS_PULL_REQUEST= $TRAVIS_PULL_REQUEST"
+  - if [ -n "$TRAVIS_TAG" ]; then echo "Tagged build detected"; else echo "No tagged build detected"; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then echo "Master branch build detected"; else echo "No master branch build detected"; fi
+  - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then echo "No pull request build detected"; else echo "Pull request build detected"; fi
+  - if [ -n "$TRAVIS_TAG" ] || ( [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]); then echo "Push functionality activated"; else echo "Push functionality disabled"; fi
+  # - npm run build
+  - docker build --build-arg VERSION="$(git describe)" -t hermanho/kube-slackteams .
+after_success:
+  # Push successful builds of the master branch to Docker Hub
+  # $DOCKER_USERNAME    - Docker Hub username used to push the image
+  # $DOCKER_PASSWORD    - Password of the Docker Hub user used to push the image
+  # See https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings
+  - if [ ! -z "$TRAVIS_TAG" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+    docker tag hermanho/kube-slackteams:latest hermanho/kube-slackteams:"$TRAVIS_TAG";
+    fi
+  - if [ "$TRAVIS_PULL_REQUEST" = "false" ] && ([ "$TRAVIS_BRANCH" == "master" ] || [ ! -z "$TRAVIS_TAG" ]) && [ "$DOCKER_USERNAME" != "" ] && [ "$DOCKER_PASSWORD" != "" ]; then
+    docker images hermanho/kube-slackteams;
+    echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin;
+    docker images --format "{{.Repository}}:{{.Tag}}" "hermanho/kube-slackteams" | xargs -L 1 docker push ;
+    fi
