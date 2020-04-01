@@ -35,8 +35,8 @@ export default class TeamsNotifier {
       "summary": "Kubernetes card",
       "themeColor": item.color,
       "title": item.title,
+      "text": item.text,
       "sections": [{
-        "text": item.text
       }]
     })
 
