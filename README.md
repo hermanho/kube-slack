@@ -55,13 +55,16 @@ subjects:
 Load this Deployment into your Kubernetes. Make sure you set `SLACK_URL` or `TEAMS_URL` to the Webhook URL and uncomment serviceAccountName if you use RBAC
 
 ```yml
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kube-slackteams
+  name: kube-slack
   namespace: kube-system
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: kube-slack
   revisionHistoryLimit: 3
   template:
     metadata:
