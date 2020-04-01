@@ -25,16 +25,20 @@ class KubeMonitoring {
 
 	start() {
 		let callback = (item: NotifyMessage) => {
-			if (!this.floodFilter.isAccepted(item._key)) {
-				return;
-			}
+			try {
+				if (!this.floodFilter.isAccepted(item._key)) {
+					return;
+				}
 
-			delete item._key;
+				delete item._key;
 
-			for (let notifier of this.notifiers) {
-				notifier.notify(item).catch(e => {
-					logger.error("error: ", e);
-				});
+				for (let notifier of this.notifiers) {
+					notifier.notify(item).catch(e => {
+						logger.error("error: ", e);
+					});
+				}
+			} catch (e) {
+				logger.error("callback error: ", e);
 			}
 		};
 
