@@ -21,21 +21,19 @@ jobs:
       script:
         - npm run build
         - docker build --build-arg VERSION="$(git describe)" -t hermanho/kube-slackteams .
-
-after_success:
-  # Push successful builds of the master branch to Docker Hub
-  # You need to define $DOCKER_REPO_PREFIX, $DOCKER_REPO_NAME, $DOCKER_USERNAME and $DOCKER_PASSWORD in your Travis settings.
-  # $DOCKER_REPO_PREFIX - Organisation of username who owns the repo on Docker Hub
-  # $DOCKER_REPO_NAME   - Repository name on Docker Hub
-  # $DOCKER_USERNAME    - Docker Hub username used to push the image
-  # $DOCKER_PASSWORD    - Password of the Docker Hub user used to push the image
-  # See https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings
-  - if ([ "$TRAVIS_BRANCH" == "master" ] || [ ! -z "$TRAVIS_TAG" ]) && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-    docker tag hermanho/kube-slackteams:latest hermanho/kube-slackteams:"$TRAVIS_TAG"
-    fi
-  - if [ "$TRAVIS_PULL_REQUEST" = "false" ] && ([ "$TRAVIS_BRANCH" == "master" ] || [ ! -z "$TRAVIS_TAG" ]) && [ "$DOCKER_USERNAME" != "" ] && [ "$DOCKER_PASSWORD" != "" ]; then
-    docker images hermanho/kube-slackteams;
-    echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin;
-    docker images --format "{{.Repository}}:{{.Tag}}" "hermanho/kube-slackteams" | xargs -L 1 docker push ;
-    docker run --rm -v "$(pwd)/:/data/:ro" -e "DOCKERHUB_USERNAME=$DOCKER_USERNAME" -e "DOCKERHUB_PASSWORD=$DOCKER_PASSWORD" -e "DOCKERHUB_REPO_PREFIX=hermanho" -e "DOCKERHUB_REPO_NAME=kube-slackteams" sheogorath/readme-to-dockerhub;
-    fi
+      after_success:
+        # Push successful builds of the master branch to Docker Hub
+        # You need to define $DOCKER_REPO_PREFIX, $DOCKER_REPO_NAME, $DOCKER_USERNAME and $DOCKER_PASSWORD in your Travis settings.
+        # $DOCKER_REPO_PREFIX - Organisation of username who owns the repo on Docker Hub
+        # $DOCKER_REPO_NAME   - Repository name on Docker Hub
+        # $DOCKER_USERNAME    - Docker Hub username used to push the image
+        # $DOCKER_PASSWORD    - Password of the Docker Hub user used to push the image
+        # See https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings
+        - if ([ "$TRAVIS_BRANCH" == "master" ] || [ ! -z "$TRAVIS_TAG" ]) && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+          docker tag hermanho/kube-slackteams:latest hermanho/kube-slackteams:"$TRAVIS_TAG"
+          fi
+        - if [ "$TRAVIS_PULL_REQUEST" = "false" ] && ([ "$TRAVIS_BRANCH" == "master" ] || [ ! -z "$TRAVIS_TAG" ]) && [ "$DOCKER_USERNAME" != "" ] && [ "$DOCKER_PASSWORD" != "" ]; then
+          docker images hermanho/kube-slackteams;
+          echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin;
+          docker images --format "{{.Repository}}:{{.Tag}}" "hermanho/kube-slackteams" | xargs -L 1 docker push ;
+          fi
