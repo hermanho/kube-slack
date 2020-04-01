@@ -1,4 +1,4 @@
-export const git: { [type: string]: string } = {
+export const gitenv: { [type: string]: string } = {
   hash: '{git-hash}',
   describe: '{git-describe}'
 }

@@ -6,6 +6,7 @@ import logger from './logger';
 import { Monitor, Notifier, MonitorFactory, NotifyMessage } from './types';
 import monitors from './monitors';
 import notifiers from './notify';
+import { gitenv } from './env';
 
 class KubeMonitoring {
 	monitors: Monitor[];
@@ -53,3 +54,6 @@ class KubeMonitoring {
 new KubeMonitoring().start();
 
 logger.info('Kubernetes monitors started');
+logger.info(`git hash: ${gitenv.hash}`);
+logger.info(`git describe: ${gitenv.describe}`);
+logger.info('===================================');
